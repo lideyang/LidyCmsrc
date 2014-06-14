@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>站内搜索 - <%=SiteConfig.WebName%></title>
+<!-- ===== seo ===== -->
+<%=AddMetaInfo(SiteConfig.WebKeywords, SiteConfig.WebDescription)%>
+<!-- ===== css ===== -->
+<link rel="shortcut icon" href="<%=SiteConfig.WebPath%>favicon.ico" mce_href="<%=SiteConfig.WebPath%>favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="<%=SiteTemplatePath("default")%>css/style.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/base.js"></script>
+<script type="text/javascript">
+$(function(){
+    ReplaceKeywords('.page_news_list', '<%=Request.QueryString["keyword"]%>');
+});
+</script>
+</head>
+<body>
+<%template src=/_warning_ie6.htm/%>
+<%template src=/_header.htm/%>
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+    <%template src=/_search_box.htm/%>
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="<%=URLRewrite("index", "")%>">主页</a> &gt; 站内搜索
+		<div class="right_function_key">
+			<a href="javascript:void(0);" onclick="SetFontSize('.page_news_list', 12);"><img src="<%=SiteTemplatePath("default")%>images/font_delete.png" width="16" height="16" /> 缩小</a><a href="javascript:void(0);" onclick="SetFontSize('.page_news_list', 16);"><img src="<%=SiteTemplatePath("default")%>images/font_add.png" width="16" height="16" /> 放大</a><a href="javascript:window.print();"><img src="<%=SiteTemplatePath("default")%>images/printer.png" width="16" height="16" /> 打印</a>
+		</div>
+	</div>
+	<!-- ===== 左侧正文 ===== -->
+	<div class="search">
+		<h2 id="page_title">查询结果<span>共<%=this.pcount %>条记录</span></h2>
+		<!-- ===== 查询列表 ===== -->
+		<ul class="page_news_list">
+			<DtContorl:Repeater ID="rptSearch" runat="server" onload="Search_List_DataBind">
+              <ItemTemplate>
+                <li><a target="_blank" href="<%#Eval("SiteUrl")%>"><%#Eval("Title")%></a><i><%#Eval("AddTime")%></i>
+				    <p><%#Eval("Remark")%></p>
+			    </li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+		<%if(this.pcount>0) {%>
+		    <%=PagerText(this.pcount, this.pagesize, this.page, SiteConfig.WebPath + "search.aspx?keyword=" + Server.UrlEncode(this.keyword) + "&page=__id__", "pagination", "flickr")%>
+		<%}else{%>
+		    <div>找不到您要找的内容，或许您可以换个关健字查询！</div>
+		<%} %>
+	</div>
+</div>
+<%template src=/_footer.htm/%>
+</body>
+</html>

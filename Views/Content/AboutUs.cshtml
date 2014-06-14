@@ -1,0 +1,46 @@
+﻿@model LidyCms.Model.Contents
+@{
+    ViewBag.Title = Model.Title;
+}
+@section AddToHead{
+    <link href="@Url.Content("/Content/Css/jquery.mCustomScrollbar.css")" rel="stylesheet" type="text/css" />
+}
+<div class="main_body bg3 aboutus">
+    <div class="c1200">
+        <p class="position">
+            <span>首页</span>&gt;<span>关于星恒星</span>&gt;<span>集团背景</span>&gt;<span></span></p>
+        <div class="main_left">
+            <ul>
+                <li class="cate1 @Html.Raw(ViewBag.Call=="about" ? "on":"")"><span><a href="@Url.Action("AboutUs", "Content", new { page = "about" })">
+                </a></span></li>
+                <li class="cate2 @Html.Raw(ViewBag.Call=="culture" ? "on":"")"><span><a href="@Url.Action("AboutUs", "Content", new { page = "culture" })">
+                </a></span></li>
+                <li class="cate3 @Html.Raw(ViewBag.Call=="story" ? "on":"")"><span><a href="@Url.Action("AboutUs", "Content", new { page = "story" })">
+                </a></span></li>
+                <li class="cate4 @Html.Raw(ViewBag.Call=="area" ? "on":"")"><span><a href="@Url.Action("AboutUs", "Content", new { page = "area" })">
+                </a></span></li>
+                <li class="cate5 @Html.Raw(ViewBag.Call=="product" ? "on":"")"><span><a href="@Url.Action("AboutUs", "Content", new { page = "product" })">
+                </a></span></li>
+            </ul>
+        </div>
+        <div class="main_right">
+            <div class="main" id="joincontent">
+                @Html.Raw(Model.Content)
+                <!--dv_scroll_bar end-->
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Scripts/jquery.mCustomScrollbar.concat.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    //滚动条
+    window.onload = function () {
+        $("#joincontent").mCustomScrollbar({
+            scrollButtons: {
+                enable: true
+            }
+        });
+    }
+</script>

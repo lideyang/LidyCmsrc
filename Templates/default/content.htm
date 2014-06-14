@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><%=model.Title %> - <%=SiteConfig.WebName%></title>
+<!-- ===== seo ===== -->
+<%=AddMetaInfo(SiteConfig.WebKeywords, SiteConfig.WebDescription)%>
+<!-- ===== css ===== -->
+<link rel="shortcut icon" href="<%=SiteConfig.WebPath%>favicon.ico" mce_href="<%=SiteConfig.WebPath%>favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="<%=SiteTemplatePath("default")%>css/style.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/base.js"></script>
+</head>
+<body>
+<%template src=/_warning_ie6.htm/%>
+<%template src=/_header.htm/%>
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	<%template src=/_search_box.htm/%>
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="<%=URLRewrite("index", "")%>">主页</a> > <%=GetChannel_Title(model.ClassId) %>
+		<div class="right_function_key">
+			<a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);"><img src="<%=SiteTemplatePath("default")%>images/font_delete.png" width="16" height="16" /> 缩小</a><a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);"><img src="<%=SiteTemplatePath("default")%>images/font_add.png" width="16" height="16" /> 放大</a><a href="javascript:window.print();"><img src="<%=SiteTemplatePath("default")%>images/printer.png" width="16" height="16" /> 打印</a>
+		</div>
+	</div>
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		<h2 id="page_title"><%=model.Title %></h2>
+		<!-- ===== 编辑框内容 开始 ===== -->
+		<div class="content_box">
+			<%=model.Content %>
+		</div>
+		<div class="addthis">
+			<!-- JiaThis Button BEGIN -->
+			<div id="ckepop"><a href="http://www.jiathis.com/share/" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank">分享</a><span class="jiathis_separator">|</span> <a class="jiathis_button_qzone"></a><a class="jiathis_button_tsina"></a><a class="jiathis_button_icons_1"></a><a class="jiathis_button_icons_2"></a></div>
+			<script type="text/javascript" src="http://v1.jiathis.com/code/jia.js" charset="utf-8"></script>
+			<!-- JiaThis Button END -->
+		</div>
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3><%=GetChannel_Title(model.ClassId) %></h3>
+		<ul>
+			<DtContorl:Repeater ID="rptList1" runat="server" onload="Content_List_DataBind" Top="0" Where='<%#"ClassId=" + model.ClassId %>'>
+              <ItemTemplate>
+                <li><a href="<%#URLRewrite("content", Eval("CallIndex")) %>"><%#Eval("Title")%></a></li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+		<h3>最新新闻</h3>
+		<ul>
+			<DtContorl:Repeater ID="rptList2" runat="server" onload="News_List_DataBind" Top="8" Where="IsLock=0 and IsRed=1">
+              <ItemTemplate>
+                <li><a href="<%#URLRewrite("News_show", Eval("Id")) %>"><%#Eval("Title")%></a><i><span><%#Comment_Count((int)Channel.News,  Convert.ToInt32(Eval("Id")))%> 评论</span><%#Eval("AddTime")%></i></li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<%template src=/_footer.htm/%>
+</body>
+</html>

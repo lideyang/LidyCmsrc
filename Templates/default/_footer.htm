@@ -1,0 +1,27 @@
+﻿<div class="bottom">
+	<!-- ===== 友情链接 ===== -->
+	<div class="links">
+		<h3>友情链接</h3>
+		<p>
+		  <DtContorl:Repeater ID="rptLink1" runat="server" onload="Link_List_DataBind" Top="10" Where="IsLock=0 and IsRed=1 and IsImage=0">
+            <ItemTemplate>
+            <a target="_blank" href="<%#Eval("WebUrl")%>"><%#Eval("Title")%></a>
+            </ItemTemplate>
+          </DtContorl:Repeater>
+		</p>
+		<p>
+		  <DtContorl:Repeater ID="rptLink2" runat="server" onload="Link_List_DataBind" Top="12" Where="IsLock=0 and IsRed=1 and IsImage=1">
+            <ItemTemplate>
+            <a target="_blank" href="<%#Eval("WebUrl")%>"><img src="<%#Eval("ImgUrl")%>" alt="<%#Eval("Title")%>" width="88" height="31" /></a>
+            </ItemTemplate>
+          </DtContorl:Repeater>
+		</p>
+		<div class="clear"></div>
+	</div>
+	<!-- ===== 版权和其他链接 ===== -->
+	<div class="footer">
+		<p class="footer_links"><a href="<%=URLRewrite("content", "about")%>">关于我们</a>|<a href="<%=URLRewrite("content", "contact")%>">联系我们</a>|<a href="<%=URLRewrite("feedback", "")%>">在线留言</a>|<a href="<%=URLRewrite("link", "")%>">友情链接</a></p>
+		<p class="copyright">Copyright Right &copy; 2010-2011 it134.cn Powered By LidyCms Inc <script src="http://s24.cnzz.com/stat.php?id=1996164&web_id=1996164&show=pic" language="JavaScript"></script></p>
+		<div class="clear"></div>
+	</div>
+</div>

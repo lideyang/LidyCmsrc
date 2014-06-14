@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>在线留言 - <%=SiteConfig.WebName%></title>
+<!-- ===== seo ===== -->
+<%=AddMetaInfo(SiteConfig.WebKeywords, SiteConfig.WebDescription)%>
+<!-- ===== css ===== -->
+<link rel="shortcut icon" href="<%=SiteConfig.WebPath%>favicon.ico" mce_href="<%=SiteConfig.WebPath%>favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="<%=SiteTemplatePath("default")%>css/style.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.form.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/messages_cn.js"></script>
+<link type="text/css" rel="stylesheet" href="<%=SiteConfig.WebPath%>images/library/msg.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>images/library/msg.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/send_json.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/base.js"></script>
+<script type="text/javascript">
+$(function() {
+    $("#comment .item:nth-child(even)").addClass("odd"); //隔行变色
+    //初始化表单
+    AjaxOnSubmit("comment_form", "btnSubmit", "<%=SiteConfig.WebPath%>Tools/Submit_json.ashx?action=feedback");
+});
+</script>
+</head>
+<body>
+<%template src=/_warning_ie6.htm/%>
+<%template src=/_header.htm/%>
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	<%template src=/_search_box.htm/%>
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="<%=URLRewrite("index", "")%>">主页</a> > 在线留言
+		<div class="right_function_key"> <a href="javascript:void(0);" onclick="SetFontSize('.answer', 12);"><img src="<%=SiteTemplatePath("default")%>images/font_delete.png" width="16" height="16" /> 缩小</a><a href="javascript:void(0);" onclick="SetFontSize('.answer', 16);"><img src="<%=SiteTemplatePath("default")%>images/font_add.png" width="16" height="16" /> 放大</a><a href="javascript:window.print();"><img src="<%=SiteTemplatePath("default")%>images/printer.png" width="16" height="16" /> 打印</a> </div>
+	</div>
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		<h2 id="page_title">留言建议</h2>
+		<div id="comment">
+			<div id="commentList">
+				<DtContorl:Repeater ID="rptFeedbackList" runat="server" onload="Feedback_List_DataBind" Where="IsLock=0" PageSize='<%#this.pagesize %>' PageIndex='<%#this.page %>'>
+                <ItemTemplate>
+                <div class="item">
+					<div class="user"><span class="u-name">网友：<%#Eval("UserName")%></span> <span class="date-ask"><%#Eval("AddTime")%></span></div>
+					<dl class="answer">
+						<dt>评论内容：</dt>
+						<dd>
+							<p><%#Eval("Content")%></p>
+							<div class="clear"></div>
+						</dd>
+					</dl>
+					<%#Eval("ReContent").ToString() != "" ? "<dl class=\"reply\">\n<dt>管理员答复：<i>" + Eval("ReTime").ToString() + "</i></dt>\n<dd>" + Eval("ReContent").ToString() + "</dd></dl>\n" : ""%>
+				</div>
+                </ItemTemplate>
+                </DtContorl:Repeater>
+			</div>
+			<%=PagerText(this.pcount, this.pagesize, this.page, URLRewrite("feedback_list1", "__id__"), "pagination", "flickr")%>
+			<div class="clear"></div>
+			<!--用户留言开始-->
+			<div class="commentform">
+				<div class="nTitle">发表留言</div>
+				<form id="comment_form" name="comment_form">
+					<dl>
+						<dt>你的姓名：</dt>
+						<dd><input name="txtUserName" type="text" maxlength="30" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>联系电话：</dt>
+						<dd><input name="txtUserTel" type="text" maxlength="30" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>在线QQ：</dt>
+						<dd><input name="txtUserQQ" type="text" maxlength="20" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>留言标题：</dt>
+						<dd><input name="txtTitle" type="text" maxlength="100" class="input2 required" style="width:385px;" /></dd>
+					</dl>
+					<dl>
+						<dt>留言内容：</dt>
+						<dd><textarea name="txtContent" class="textarea required" minlength="5" maxlength="3000"></textarea></dd>
+					</dl>
+					<dl>
+						<dt>验证码：</dt>
+						<dd style="width:385px;">
+							<input name="txtCode" type="text" class="input2 required" minlength="4" maxlength="5" style="width:50px;" />
+							<a href="javascript:void(0);" onclick="ToggleCode(this, '<%=SiteConfig.WebPath%>Tools/VerifyCodeImage.ashx');return false;"><img src="<%=SiteConfig.WebPath%>Tools/VerifyCodeImage.ashx" width="80" height="22" alt="点击切换验证码" style="vertical-align:middle;"> 看不清楚？</a> </dd>
+						<dd>
+							<input id="btnSubmit" name="btnSubmit" type="submit" class="submit2" value="提交保存">
+						</dd>
+					</dl>
+					<div class="clear"></div>
+				</form>
+			</div>
+			<!--用户留言结束-->
+		</div>
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3>关于我们</h3>
+		<ul class="sidebar_nav">
+			<DtContorl:Repeater ID="rptContentList" runat="server" onload="Content_List_DataBind" Where="ClassId=10">
+              <ItemTemplate>
+                <li><a href="<%#URLRewrite("content", Eval("CallIndex")) %>"><%#Eval("Title")%></a></li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+		<h3>最新新闻</h3>
+		<ul class="sidebar_news">
+			<DtContorl:Repeater ID="rptList2" runat="server" onload="News_List_DataBind" Top="8" Where="IsLock=0 and IsRed=1">
+              <ItemTemplate>
+                <li><a href="<%#URLRewrite("News_show", Eval("Id")) %>"><%#Eval("Title")%></a><i><span><%#Comment_Count((int)Channel.News,  Convert.ToInt32(Eval("Id")))%> 评论</span><%#Eval("AddTime")%></i></li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<%template src=/_footer.htm/%>
+</body>
+</html>

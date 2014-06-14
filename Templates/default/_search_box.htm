@@ -1,0 +1,4 @@
+﻿    <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="<%=Request.QueryString["keyword"]%>" />
+	    <input type="button" class="button" onclick="SiteSearch('<%=SiteConfig.WebPath%>search.aspx', '#txtKeywords');" />
+	</div>

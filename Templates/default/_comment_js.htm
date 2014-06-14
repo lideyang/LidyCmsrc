@@ -1,0 +1,19 @@
+﻿<link type="text/css" rel="stylesheet" href="<%=SiteConfig.WebPath%>images/library/msg.css" />
+<link type="text/css" rel="stylesheet" href="<%=SiteConfig.WebPath%>css/pagination.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.form.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/messages_cn.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>images/library/msg.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.pagination.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/send_json.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/comment.js"></script>
+<script type="text/javascript">
+$(function() {
+    //初始化星级事件
+    CommentStar("#comment #stars", "#comment #stars a", "#hidStar");
+    //初始化评论列表
+    AjaxCommentList("#pagination", 10, <%=Comment_Count(this.kindId, this.Id)%>, "<%=SiteConfig.WebPath%>Tools/Comment_json.ashx?action=list&kindId=<%=this.kindId%>&parentId=<%=this.Id%>");
+    //初始化发表评论表单
+    AjaxOnSubmit("comment_form", "btnSubmit", "<%=SiteConfig.WebPath%>Tools/Comment_json.ashx?action=add&kindId=<%=this.kindId%>&parentId=<%=this.Id%>");
+});
+</script>

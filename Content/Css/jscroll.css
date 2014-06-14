@@ -1,0 +1,22 @@
+.main{
+	width:750px;
+	height:420px;
+	padding:0 0 20px;
+	z-index: 111;
+}
+.giftmain
+{
+  width:auto;
+  height:300px;
+}
+.box-163css{ background:url(../images/bg01.gif) no-repeat; padding-top:166px; margin:0 auto; width:292px; height:527px;}
+#ee{overflow:hidden;height:442px; vertical-align:top; position:relative;width:282px; float:right; margin-right:5px; display:inline;}
+#ee h5{ width:98%; margin-top:10px; float:left; text-align:left; padding-left:2%;}
+.piclist{ width:260px;}
+.piclist li{ width:100%; float:left;margin:10px 5px; display:inline;}
+.piclist li a{ display:block; overflow:hidden; float:left;}
+.piclist li strong{ float:left; padding:6px 0 0 12px;}
+.jscroll-e{ float:left;border-radius: 5px;margin:20px 0 0;}
+.jscroll-c{ float:left; top:0;}
+.jscroll-h{ top:0; border-radius:6px; cursor:pointer; border:1px solid #ccddbc; background:#d8e8c9;width:2px!important;margin:0 2px;}
+div.giftdetail .jscroll-e{margin:0}

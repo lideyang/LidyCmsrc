@@ -1,0 +1,61 @@
+﻿@model LidyCms.Model.Pictures
+@{
+    ViewBag.Title = "爱的礼物";
+}
+@section AddToHead{
+    <link href="@Url.Content("/Content/Css/jquery.slideBox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("/Content/Css/jquery.mCustomScrollbar.css")" rel="stylesheet" type="text/css" />
+}
+<div class="main_body bg3">
+    <div class="c1200 giftcontent">
+         <p class="position">
+            <span><a href="@Url.Action("Index","Index")">首页</a></span>&gt;
+            <span><a href="@Url.Action("Index", "Picture")">爱的礼物</a></span>&gt;
+            <span><a href="@Url.Action("Detail", "Picture", new { id = Model.Id })">@Model.Title</a></span>
+        </p>
+        <div class="main_left">
+            <div id="slideBox" class="slideBox giftBox">
+                <ul class="items">
+                @foreach (var pic in Model.PicturesAlbums)
+                {
+                   <li><a href="#" title="@Model.Title"><img src="@pic.ImgUrl" alt="@Model.Title" /></a></li>
+                }
+                </ul>
+            </div>
+        </div>
+        <!-- 右边礼物列表 -->
+        <div class="main_right">
+            <div class="newsdatail">
+                <span id="Titles">@Model.Title</span> | <span id="AddTime">
+                   @Model.AddTime</span></div>
+            <div class="main giftmain" id="giftcontent">
+              @Html.Raw(Model.Content)
+            </div>
+            <!--dv_scroll_bar end-->
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Scripts/jquery.slideBox.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/Scripts/jquery.mCustomScrollbar.concat.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    //滚动图
+    $('#slideBox').slideBox({
+        direction: 'left', //left,top#方向
+        duration: 0.3, //滚动持续时间，单位：秒
+        easing: 'swing', //swing,linear//滚动特效
+        delay: 5, //滚动延迟时间，单位：秒
+        hideClickBar: false, //不自动隐藏点选按键
+        clickBarRadius: 10, //按钮radius  
+        startIndex: 1//初始焦点顺序
+    });
+
+    //文字滚动
+    $("#giftcontent").mCustomScrollbar({
+        scrollButtons: {
+            enable: true
+        }
+    });
+
+</script>

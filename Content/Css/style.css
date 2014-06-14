@@ -1,0 +1,289 @@
+﻿@charset "utf-8";
+@import url(reset.css);
+
+/* --------------------------------------------------------------
+Basic Style Sheet for LidyCms.net
+
+version:     1 (2011-5-12)
+author:      Li Jianping
+email:       starplain@gmail.com
+QQ:          54620373
+----------------------------------------------------------------- */
+
+body { font-family:"微软雅黑", Arial; font-size: 12px; background-image: url(../images/body_bg.jpg); background-repeat: no-repeat; background-position: center top; color: #666; }
+a { color: #333; text-decoration: none; }
+a:hover { color: #069; text-decoration: none; }
+h1,h2,h3,h4 { color:#000; }
+
+b { font-weight: bold; color: #000; }
+
+hr { margin: 30px 0px; padding: 0px; height: 1px; background-color: #bcbcbc; }
+
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+/* Clear Fix */ 
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;} 
+.clearfix{display:inline-block;} 
+/* Hide from IE Mac */ 
+.clearfix {display:block;} 
+/* End hide from IE Mac */ 
+/* end of clearfix */ 
+
+/* 顶部框 logo 导航
+----------------------------------------------------------------- */
+.top { background-image: url(../images/top_bg.png); background-repeat: no-repeat; background-position: left top; clear: left; height: 46px; width: 900px; margin: 16px auto 15px auto; padding: 0 50px; position: relative; }/* h1 通过绝对定位展示于导航下面, 其包裹框 top 相对定位 */
+
+h1 a { position: absolute; background-image: url(../images/logo.png); background-repeat: no-repeat; background-position: left top; text-indent: -6000px; top: 92px; height: 46px; width: 133px; }
+
+.dt_logo { background-image: url(../images/dt.png); background-repeat: no-repeat; background-position: left top; float: right; height: 29px; width: 56px; text-indent: -6000px; margin: 9px 0 0 0; }
+
+.nav { float: left; height: 46px; list-style-type: none; }
+.nav li { float: left; height: 46px; }
+.nav li a { line-height: 44px; color: #666; margin-right: 20px; font-size: 14px; }
+.nav li a:hover { color: #069; }
+.nav li #now { color: #000; }
+
+/* 右上角搜索框
+----------------------------------------------------------------- */
+.search_box { float: right; height: 32px; width: 261px; margin: 40px 0; }
+.search_box .text { line-height: 22px; background-image: url(../images/search_box.gif); background-repeat: no-repeat; background-position: left top; margin: 0px; padding: 5px; float: left; height: 22px; width: 210px; border: 0px none #FFF; }
+.search_box .button { background-image: url(../images/search_button.gif); background-repeat: no-repeat; background-position: left top; text-indent: -6000px; margin: 0px; padding: 0px; float: left; height: 32px; width: 41px; border: 0px none #FFF; cursor: pointer; }
+
+/* 主内容框
+----------------------------------------------------------------- */
+.container { margin: 0 auto; padding: 0 50px 35px 50px; width: 900px; clear: left; background-image: url(../images/main_bg.png); background-repeat: repeat-y; background-position: left top; }
+
+.banner { margin-bottom: 30px; }
+
+.ad_text h2 { font-size: 30px; color: #000; font-weight: normal; margin-bottom: 20px; }
+.ad_text p { font-size: 15px; margin-bottom: 20px; }
+.ad_text a { line-height: 32px; background-image: url(../images/button.gif); background-repeat: repeat; background-position: left top; display: block; height: 32px; width: 140px; text-align: center; border: 1px solid #FFF; }
+.ad_text a:hover { line-height: 32px; background-image: none; display: block; height: 32px; width: 140px; text-align: center; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #dddddd; border-right-color: #bcbcbc; border-bottom-color: #bcbcbc; border-left-color: #dddddd; }
+
+/* 主页带连接标题
+----------------------------------------------------------------- */
+.h2_link a { background-image: url(../images/h2_more.png); background-repeat: no-repeat; background-position: right center; display: block; font-size: 20px; font-weight: normal; line-height: 20px; height: 20px; margin: 0 0 25px 0; color: #000; }
+.h2_link a:hover { background-image: url(../images/h2_more_h.png); color: #069; }
+
+/* 图文列表
+----------------------------------------------------------------- */
+.product_list { float: left; width: 900px; overflow: hidden; }
+.product_list ul { float: left; width: 936px; list-style-type: none; }
+.product_list ul li { float: left; width: 198px; height: 228px; margin-right: 36px; }
+.product_list ul li a { float: left; width: 198px; height: 228px; }
+.product_list ul li a img { float: left; border: 1px solid #CCC; margin: 0 0 10px 0; }
+.product_list ul li a:hover img { float: left; border: 1px solid #069; margin: 0 0 10px 0; }
+
+.page_product_list { float: left; width: 650px; overflow: hidden; border-bottom: 1px dotted #BFC1C4; margin: 0 0 10px 0; }
+.page_product_list ul { float: left; width: 678px; list-style-type: none; }
+.page_product_list ul li { float: left; width: 198px; height: 245px; margin-right: 28px; }
+.page_product_list ul li a { float: left; width: 198px; height: 228px; }
+.page_product_list ul li a img { float: left; border: 1px solid #CCC; margin: 0 0 10px 0; }
+.page_product_list ul li a:hover img { float: left; border: 1px solid #069; margin: 0 0 10px 0; }
+
+.pictureDIV { float: left; margin: 0 0 20px 0; }
+/* 新增样式2011-5-23
+-----------------------------------------------------------------*/
+/*图片放大镜样式*/
+.jqzoom{ float:left;border:none; position:relative; padding:0px; cursor:pointer; margin:0px; display:block; }
+.zoomdiv{ z-index:100; position:absolute; top:0px; left:0px; background:#ffffff; border:1px solid #CCCCCC; display:none; text-align:center; overflow:hidden; }
+.jqZoomPup{ z-index:10; visibility:hidden; position:absolute; top:0px;left:0px; width:20px; height:20px; border:1px solid #aaa; background:#ffffff /*url(../images/zoom.png) 50% center no-repeat*/;opacity: 0.5;-moz-opacity: 0.5;-khtml-opacity: 0.5;filter: alpha(Opacity=50);}
+
+/*图片小图预览列表*/
+.spec-preview{ width:292px; height:292px; border: 1px solid #CCC;}
+.spec-preview .jqzoom img{ width:292px; height:292px; }
+.spec-scroll{ clear:both; margin-top:5px; width:294px; }
+.spec-scroll .prev{ float:left; margin-right:5px; }
+.spec-scroll .next{ float:right; }
+.spec-scroll .prev,.spec-scroll .next{ display:block; font-family:"宋体"; text-align:center; width:10px; height:54px; line-height:54px; border:1px solid #CCC; background:#EBEBEB; cursor:pointer; text-decoration:none; }
+.spec-scroll .items{ float:left;position: relative;width:261px; height:56px; overflow:hidden; }
+.spec-scroll .items ul{ list-style:none; position:absolute; width:999999px; height:56px; }
+.spec-scroll .items ul li{ float:left; width:65px; text-align:center; }
+.spec-scroll .items ul li img{ border:1px solid #CCC; padding:2px; width:50px; height:50px; }
+.spec-scroll .items ul li img:hover{ border:2px solid #FF6600; padding:1px; }
+/*------------------------------新增结束--------------------------*/
+.productItem { height: 330px; border-top-width: 1px; border-bottom-width: 1px; border-top-style: dotted; border-bottom-style: dotted; border-top-color: #CCC; border-bottom-color: #CCC; list-style-type: none; float: left; margin: 0 0 20px 10px; width: 326px; padding: 10px; line-height: 34px; font-size: 14px; }
+
+
+/* 首页新闻列表
+----------------------------------------------------------------- */
+.news_list { float: left; width: 900px; overflow: hidden; }
+.news_list ul { float: left; width: 936px; list-style-type: none; }
+.news_list ul li { float: left; width: 198px; height: 115px; margin-right: 36px; }
+.news_list ul li a { font-size: 14px; display: block; float: left; }
+.news_list ul li i { font-style: normal; color: #999; margin-bottom: 5px; display: block; float: left; }
+.news_list ul li p { clear:both; display: block;  width: 198px; }
+
+/* 底部三块内容
+----------------------------------------------------------------- */
+.other3 { float: left; width: 900px; overflow: hidden; line-height: 20px; }
+.other3 ul { float: left; width: 930px; list-style-type: none; }
+.other3 ul li { background-image: url(../images/other3_bg.gif); background-repeat: repeat-x; background-position: left top; padding: 17px 17px 0 17px; float: left; height: 270px; width: 244px; margin: 0 30px 0 0; border: 1px solid #bcbcbc; }
+.other3 ul li h3 { font-size: 18px; line-height: 24px; font-weight: normal; height: 24px; margin-bottom: 10px; }
+.other3 ul li img { margin: 0 0 18px 0; }
+
+#index_download_list { float: none; width: 244px; list-style-type: none; }
+#index_download_list li { background-image: none; margin: 0px; padding: 0px; float: none; height: 20px; width: 244px; border: 0px none #FFF; }
+
+.read_more { display: block; margin: 18px 0 0 0; }
+
+/* 内页 面包屑
+----------------------------------------------------------------- */
+.bread_crumbs { line-height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #bcbcbc; margin: 0 0 20px 0; }
+.right_function_key { float: right; }
+.right_function_key img { margin-top: -3px; }
+.right_function_key a { margin-left: 15px; }
+
+.addthis {  padding-top: 20px; }
+
+/* 内页 正文框
+----------------------------------------------------------------- */
+.page_left { float: left; width: 650px; }
+#page_title { font-size: 22px; font-weight: normal; margin-top:15px; margin-bottom: 15px; }
+#page_title span { font-size: 12px; font-weight: normal; color: #666; margin-left:20px; }
+
+#news_title { font-size: 22px; font-weight: normal; margin-bottom: 15px; text-align: center; }
+.date_i { font-style: normal; color: #999; text-align: center; display: block; margin: 0 0 40px 0; }
+
+/* 页面内容框内样式
+----------------------------------------------------------------- */
+.page_left .content_box p { margin-top: 20px; margin-bottom: 20px; }
+.page_left .content_box h1 { font-size: 18px; color: #333; }
+.page_left .content_box h2 { font-size: 16px; color: #333; }
+.page_left .content_box h3 { font-size: 14px; color: #333; }
+.page_left .content_box ul,.page_left .content_box ol { list-style-position: inside; margin-top: 20px; margin-bottom: 20px; }
+
+/* 内页新闻列表样式
+----------------------------------------------------------------- */
+.page_news_list { list-style-type: none; }
+.page_news_list li { margin-bottom: 10px; padding-bottom: 10px; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #BFC1C4; }
+.page_news_list li a { font-size: 16px; display: block; line-height: 30px; }
+.page_news_list li i { font-style: normal; background-image: url(../images/date.png); background-repeat: no-repeat; background-position: left center; padding-left: 24px; line-height: 30px; }
+.page_news_list li i span { background: url(../images/comments.png) no-repeat left center; padding-left: 24px; margin-left: 20px; }
+
+
+/* 下载列表
+----------------------------------------------------------------- */
+.page_download_list { list-style-type: none; }
+.page_download_list li { margin-bottom: 10px; padding-bottom: 10px; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #BFC1C4; float: left; width: 650px; }
+.page_download_list li a { font-size: 16px; display: block; line-height: 30px; }
+.page_download_list li i { font-style: normal; background-image: url(../images/date.png); background-repeat: no-repeat; background-position: left center; padding-left: 24px; line-height: 30px; }
+.page_download_list li i span { background: url(../images/comments.png) no-repeat left center; padding-left: 24px; margin-left: 20px; }
+.img_in_list { float: left; border: 1px solid #CCC; margin: 0 20px 0 0; }
+.img_in_list:hover { float: left; border: 1px solid #069; margin: 0 20px 0 0; }
+
+.blue_box { padding: 5px; border: 1px solid #D2E8FA; font-size: 14px; background-color: #f1f7fd; text-align: center; }
+.blue_box a { color: #069; }
+.blue_box a:hover { color: #333; }
+
+/*=====================注释掉的旧样式==============================
+.pagination { text-align: right; }
+.current { font-weight: bold; color: #069; margin-right: 10px; margin-left: 10px; }
+*/
+#pagination{float:right;}
+
+/* 新闻文章结尾处 前后与返回按钮
+----------------------------------------------------------------- */
+.p_n_b { height: 30px; width: 618px; line-height: 30px; background-image: url(../images/gradient_bg.gif); background-repeat: repeat-x; background-position: left top; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #ddd; border-right-color: #bcbcbc; border-bottom-color: #bcbcbc; border-left-color: #ddd; margin-top: 30px; padding-right: 15px; padding-left: 15px; overflow:hidden;}
+.p_n_b a { width: 206px; display: block; height: 28px; float: left; margin-bottom: 20px; }
+.previous {}
+.back { text-align: center; }
+.next { text-align: right; }
+
+/* 留言评论
+----------------------------------------------------------------- */
+.comment { width: 650px; display: block; float:left; }
+#commentList { border-top-width: 1px; border-top-style: solid; border-top-color: #bcbcbc; float: left; margin-top: 0; margin-right: 0; margin-bottom: 20px; margin-left: 0; }
+
+.item { padding: 20px 15px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #bcbcbc; float:left; }
+#commentList .odd { background-color: #f9f9f9; }
+#commentList .user { float: right; display: block; }
+.user .u-name { float: left; margin-right: 15px;}
+.user .star {   float: left; }
+.user .date-ask { margin-left: 15px;float: left; }
+
+.answer { margin-top: 15px; float: left; }
+.answer dt { background: url(../images/comments.png) no-repeat left center; float: left; padding-left: 22px; color: #069; width: 65px; line-height: 16px; height: 16px; }
+.answer dd { width: 533px; float: left; color:#333; } 
+
+.reply { float: left; background-color: #F7F7F7; border: 1px solid #F8E0C7; width: 600px; padding: 10px; margin-top: 10px; }
+.odd .reply { background-color: #fff; } /* 橙色框内，管理员答复为白色底，以便区分 */
+.reply dt { font-weight: bold; color: #F90;  }
+.reply dt i { font-style: normal; color: #666; float: right; font-weight: normal; }
+.reply dd { color: #F00; margin-top: 10px; }
+
+
+.commentform { border: 1px solid #bcbcbc; margin: 20px 0 0 0; background-image: url(../images/gradient_bg.gif); background-repeat: repeat-x; background-position: left top; }
+.commentform .nTitle { font-size: 16px; background: url(../images/comment_edit.png) no-repeat 10px center; padding-left: 32px; border-bottom: 1px solid #bcbcbc; line-height: 30px; height: 30px; color: #333; }
+
+#comment_form { margin: 20px 10px 10px 20px; }
+#comment_form dl { float:left; padding: 0 0 10px 0; }
+#comment_form dl dt { float:left; line-height: 28px; width: 75px; text-align: right; margin: 0 5px 0 0; }
+#comment_form dl dd { float:left; line-height: 28px; }
+#comment_form input,#comment_form textarea { padding: 3px; }
+#comment_form dl dd .textarea { height: 100px; width: 440px; }
+/*================新添加的=======================*/
+#comment_form dl dd .input2{ width:120px; }
+#comment_form dl dd .submit2{ padding:3px 5px; }
+#comment .star{ display:inline-block; background:url(../images/comment_icon.gif) no-repeat; width:65px; height:12px; overflow:hidden; }
+#comment .star0{background-position:-65px 0;}
+#comment .star1{background-position:-52px 0;}
+#comment .star2{background-position:-39px 0;}
+#comment .star3{background-position:-26px 0;}
+#comment .star4{background-position:-13px 0;}
+#comment .star5{background-position:0 0;}
+#comment #stars{position:relative;line-height:12px;vertical-align:middle;}
+#comment #stars a{position:absolute;display:block;width:13px;height:12px;line-height:12px;cursor:pointer;text-indent:-999px;}
+#comment #stars .a2{left:13px;}
+#comment #stars .a3{left:26px;}
+#comment #stars .a4{left:39px;}
+#comment #stars .a5{left:52px;}
+
+/* 侧边栏
+----------------------------------------------------------------- */
+.page_right { float: right; width: 220px; }
+.page_right h3 { font-size: 16px; font-weight: normal; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #000; margin-bottom: 10px; padding-bottom: 10px; }
+.page_right ul { list-style-position: outside; list-style-image: url(../images/sidebar_list_icon.gif); padding-left: 11px; margin-bottom: 20px; }
+.page_right ul li { border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #BFC1C4; margin-bottom: 8px; padding-bottom: 8px; }
+.page_right ul li:hover { border-bottom-style: solid; }
+.page_right ul li a {  display: block; }
+.page_right ul li i { display: block; margin-top: 5px; font-style: normal; }
+.page_right ul li i span { float: right; padding-left: 22px; }
+
+/*====================新增加的样式===================*/
+.page_right .sidebar_nav li a{display:inline-block;}
+
+.bottom { clear:both; margin: 0 auto; width: 1000px; background: url(../images/main_bottom_bg.gif) repeat-x left top; padding: 10px 0 20px 0; overflow:hidden; }
+
+/* 友情链接
+----------------------------------------------------------------- */
+.links { margin: 10px 0 20px 0; padding: 10px 50px 10px 50px; background-color: #ebebeb; }
+.links h3 { font-size: 20px; font-weight: normal; margin: 0 0 4px 0; padding: 0 0 10px 0; background-image: url(../images/link_h_bg.gif); background-repeat: repeat-x; background-position: left bottom; }
+.links p { float:left; width: 900px; margin-right: 20px; height: 40px; }
+.links a { margin: 0 15px 0 0; line-height: 40px; }
+
+.linktxt a { margin-right: 20px; }
+
+.linkimg { list-style-type: none; float: left; }
+.linkimg li { float: left; margin-right: 30px; margin-bottom: 20px; }
+
+/*==================新增加的链接样式====================*/
+.sitelink dl { clear:both; padding-top:10px; }
+.sitelink dl dt { float: left; width:120px; line-height:50px; text-align:center;}
+.sitelink dl dd { float: left; }
+.sitelink dl dd .textarea { width:380px; height:50px; border:1px solid #D1D1D1; color:#999; font-size:12px; padding:3px; overflow:hidden; }
+
+/* 版权和其他链接
+----------------------------------------------------------------- */
+.footer { color: #CCC; background-color: #333; width: 900px; margin: 0 auto; padding: 10px 50px; }
+.footer a { color: #CCC; padding-right: 5px; padding-left: 5px; }
+.footer a:hover { color: #fff; }
+.footer .footer_links { float: left; }
+.footer .copyright { float: right; }

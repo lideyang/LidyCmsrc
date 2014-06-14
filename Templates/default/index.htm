@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><%=SiteConfig.WebName%> - LidyCms系统|ASP.NET开源|开源CMS|网站管理系统|互联网开发</title>
+<!-- ===== seo ===== -->
+<%=AddMetaInfo(SiteConfig.WebKeywords, SiteConfig.WebDescription)%>
+<!-- ===== css ===== -->
+<link rel="shortcut icon" href="<%=SiteConfig.WebPath%>favicon.ico" mce_href="<%=SiteConfig.WebPath%>favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="<%=SiteTemplatePath("default")%>css/style.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/base.js"></script>
+</head>
+<body>
+<%template src=/_warning_ie6.htm/%>
+<%template src=/_header.htm/%>
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	<%template src=/_search_box.htm/%>
+	<!-- ===== 横幅广告 ===== -->
+	<div class="banner"><script type="text/javascript" src="/Tools/Advert_js.ashx?id=2"></script></div>
+	<div class="ad_text">
+		<h2>关于动力启航LidyCms网站内容管理系统</h2>
+		<%=GetContent("index_about") %>
+		<a href="<%=URLRewrite("content", "about")%>">查看更多内容</a></div>
+	<hr />
+	<h2 class="h2_link"><a href="<%=URLRewrite("picture", "")%>">图文展示</a></h2>
+	<div class="product_list">
+		<ul>
+			<DtContorl:Repeater ID="pictureList" runat="server" onload="Picture_List_DataBind" Top="4" Where="IsLock=0 and IsRed=1">
+            <ItemTemplate>
+                <li><a href="<%#URLRewrite("picture_show", Eval("Id"))%>"><img src="<%#Eval("ImgUrl")%>" width="196" height="196" alt="<%#Eval("Title")%>" /><%#Utils.CutString(Eval("Title").ToString(), 26)%></a>
+		        </li>
+            </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<hr />
+	<h2 class="h2_link"><a href="<%=URLRewrite("News", "")%>">最新新闻</a></h2>
+	<div class="news_list">
+		<ul>
+			<DtContorl:Repeater ID="newsList" runat="server" onload="News_List_DataBind" Top="4" Where="IsLock=0 and IsRed=1">
+            <ItemTemplate>
+                <li><a href="<%#URLRewrite("News_show", Eval("Id"))%>"><%#Utils.CutString(Eval("Title").ToString(), 38)%></a><i><%#Eval("AddTime")%></i>
+			    <p><%#Utils.CutString(Eval("Daodu").ToString(), 84)%></p>
+		        </li>
+            </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<hr />
+	<div class="other3">
+		<ul>
+			<li>
+				<h3>资源下载</h3>
+				<img src="<%=SiteTemplatePath("default")%>images/download.jpg" width="244" height="93" />
+				<ul id="index_download_list">
+                    <DtContorl:Repeater ID="downList" runat="server" onload="Download_List_DataBind" Top="3" Where="IsLock=0 and IsRed=1">
+                        <ItemTemplate>
+                            <li><a href="<%#URLRewrite("download_show", Eval("Id"))%>"><%#Utils.CutString(Eval("Title").ToString(), 38)%></a></li>
+                        </ItemTemplate>
+                    </DtContorl:Repeater>
+				</ul>
+				<a class="read_more" href="<%=URLRewrite("download", "")%>">Read more</a></li>
+			<li>
+				<h3>留言反馈</h3>
+				<img src="<%=SiteTemplatePath("default")%>images/feedback.jpg" width="244" height="93" />
+				<DtContorl:Repeater ID="rptFeedback" runat="server" onload="Feedback_List_DataBind" Top="1" Where="IsLock=0">
+                <ItemTemplate>
+                <p><b><%#Eval("UserName")%>：</b><%#Eval("Title")%></p>
+				<i><%#Eval("AddTime")%></i>
+                </ItemTemplate>
+                </DtContorl:Repeater>
+                <a class="read_more" href="<%=URLRewrite("feedback", "")%>">Read more</a></li>
+			<li>
+				<h3>联系我们</h3>
+				<img src="<%=SiteTemplatePath("default")%>images/contact.jpg" width="244" height="93" />
+				<%=GetContent("index_contact") %>
+				<a class="read_more" href="<%=URLRewrite("content", "contact")%>">Read more</a></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<%template src=/_footer.htm/%>
+</body>
+</html>

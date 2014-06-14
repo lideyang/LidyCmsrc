@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>友情链接 - <%=SiteConfig.WebName%></title>
+<!-- ===== seo ===== -->
+<%=AddMetaInfo(SiteConfig.WebKeywords, SiteConfig.WebDescription)%>
+<!-- ===== css ===== -->
+<link rel="shortcut icon" href="<%=SiteConfig.WebPath%>favicon.ico" mce_href="<%=SiteConfig.WebPath%>favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="<%=SiteTemplatePath("default")%>css/style.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.form.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>js/messages_cn.js"></script>
+<link type="text/css" rel="stylesheet" href="<%=SiteConfig.WebPath%>images/library/msg.css" />
+<script type="text/javascript" src="<%=SiteConfig.WebPath%>images/library/msg.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/send_json.js"></script>
+<script type="text/javascript" src="<%=SiteTemplatePath("default")%>js/base.js"></script>
+<script type="text/javascript">
+$(function() {
+    //初始化表单
+    AjaxOnSubmit("comment_form", "btnSubmit", "<%=SiteConfig.WebPath%>Tools/Submit_json.ashx?action=link");
+});
+</script>
+</head>
+<body>
+<%template src=/_warning_ie6.htm/%>
+<%template src=/_header.htm/%>
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	<%template src=/_search_box.htm/%>
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="<%=URLRewrite("index", "")%>">主页</a> > 友情链接
+		<div class="right_function_key"> <a href="javascript:void(0);" onclick="SetFontSize('.sitelink', 12);"><img src="<%=SiteTemplatePath("default")%>images/font_delete.png" width="16" height="16" /> 缩小</a><a href="javascript:void(0);" onclick="SetFontSize('.sitelink', 16);"><img src="<%=SiteTemplatePath("default")%>images/font_add.png" width="16" height="16" /> 放大</a><a href="javascript:window.print();"><img src="<%=SiteTemplatePath("default")%>images/printer.png" width="16" height="16" /> 打印</a> </div>
+	</div>
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		<h2 id="page_title">友情链接</h2>
+		<div class="content_box">
+			<div class="blue_box"><a href="#link">== 点击这里申请加入友情链接 ==</a></div>
+			<br />
+			<h2>文字链接</h2>
+			<p class="linktxt">
+			  <DtContorl:Repeater ID="rptLinkTxt" runat="server" onload="Link_List_DataBind" Where="IsLock=0 and IsImage=0">
+                <ItemTemplate>
+                <a target="_blank" href="<%#Eval("WebUrl")%>"><%#Eval("Title")%></a>
+                </ItemTemplate>
+              </DtContorl:Repeater>
+			</p>
+			<h2>图片链接</h2>
+			<ul class="linkimg">
+				<DtContorl:Repeater ID="rptLinkImg" runat="server" onload="Link_List_DataBind" Where="IsLock=0 and IsImage=1">
+                  <ItemTemplate>
+                  <a target="_blank" href="<%#Eval("WebUrl")%>"><img src="<%#Eval("ImgUrl")%>" alt="<%#Eval("Title")%>" width="88" height="31" /></a>
+                  </ItemTemplate>
+                </DtContorl:Repeater>
+			</ul>
+			<div class="clear"></div>
+			<!--申请链接结束-->
+			<div class="clear"></div>
+			<div class="blue_box"><a>== 本站友情链接展示 ==</a></div>
+			<div class="clear"></div>
+			<div class="sitelink">
+                <dl>
+                    <dt><a href="http://www.it134.cn" target="_blank">动力启航</a></dt>
+                    <dd><textarea class="textarea"><a href="http://www.it134.cn" target=_blank >动力启航</a></textarea></dd>
+                </dl>
+                <dl>
+                    <dt><a href="http://www.it134.cn" target="_blank"><img src="http://www.it134.cn/images/links.gif" /></a></dt>
+                    <dd><textarea class="textarea"><a href="http://www.it134.cn" target=_blank ><img src="http://www.it134.cn/images/links.gif" border=0 alt="动力启航"></a></textarea></dd>
+                </dl>
+            </div>
+            <div class="clear"></div>
+            
+			<!--申请链接开始-->
+			<div class="commentform">
+				<div class="nTitle">申请链接<a name="link"></a></div>
+				<form id="comment_form" name="comment_form">
+					<dl>
+						<dt>网站名称：</dt>
+						<dd><input name="txtTitle" type="text" maxlength="100" id="txtTitle" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>联系人：</dt>
+						<dd><input name="txtUserName" type="text" maxlength="50" id="txtUserName" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>联系电话：</dt>
+						<dd><input name="txtUserTel" type="text" maxlength="50" id="txtUserTel" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>电子邮箱：</dt>
+						<dd><input name="txtUserMail" type="text" maxlength="50" id="txtUserMail" class="input2 email" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>链接网址：</dt>
+						<dd><input name="txtWebUrl" type="text" maxlength="250" id="txtWebUrl" class="input2 required url" style="width:350px;" /></dd>
+					</dl>
+					<dl>
+						<dt>链接类型：</dt>
+						<dd><input id="rblIsImage_0" type="radio" name="rblIsImage" value="0" checked="checked" /><label for="rblIsImage_0">文字链接</label><input id="rblIsImage_1" type="radio" name="rblIsImage" value="1" /><label for="rblIsImage_1">图片链接</label></dd>
+					</dl>
+					<dl>
+						<dt>LOGO地址：</dt>
+						<dd><input name="txtImgUrl" type="text" maxlength="250" id="txtImgUrl" class="input2 url" style="width:350px;" /></dd>
+					</dl>
+					<dl>
+						<dt>备注说明：</dt>
+						<dd>提交申请前请确保你的网站已经加入了动力启航的链接。</dd>
+					</dl>
+					<dl>
+						<dt>验证码：</dt>
+						<dd style="width:385px;">
+							<input name="txtCode" type="text" class="input2 required" minlength="4" maxlength="5" style="width:50px;">
+							<a href="javascript:void(0);" onclick="ToggleCode(this, '<%=SiteConfig.WebPath%>Tools/VerifyCodeImage.ashx');return false;"><img src="<%=SiteConfig.WebPath%>Tools/VerifyCodeImage.ashx" width="80" height="22" alt="点击切换验证码" style="vertical-align:middle;"> 看不清楚？</a> </dd>
+						<dd>
+							<input id="btnSubmit" name="btnSubmit" type="submit" class="submit2" value="提交保存">
+						</dd>
+					</dl>
+					<div class="clear"></div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3>关于我们</h3>
+		<ul>
+			<DtContorl:Repeater ID="rptContentList" runat="server" onload="Content_List_DataBind" Where="ClassId=10">
+              <ItemTemplate>
+                <li><a href="<%#URLRewrite("content", Eval("CallIndex")) %>"><%#Eval("Title")%></a></li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+		<h3>最新新闻</h3>
+		<ul>
+			<DtContorl:Repeater ID="rptList2" runat="server" onload="News_List_DataBind" Top="8" Where="IsLock=0 and IsRed=1">
+              <ItemTemplate>
+                <li><a href="<%#URLRewrite("News_show", Eval("Id")) %>"><%#Eval("Title")%></a><i><span><%#Comment_Count((int)Channel.News,  Convert.ToInt32(Eval("Id")))%> 评论</span><%#Eval("AddTime")%></i></li>
+              </ItemTemplate>
+            </DtContorl:Repeater>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<%template src=/_footer.htm/%>
+</body>
+</html>

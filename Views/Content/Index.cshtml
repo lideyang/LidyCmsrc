@@ -1,0 +1,43 @@
+﻿@model LidyCms.Model.ContentList
+@{
+    ViewBag.Title = Model.Contents.Title;
+}
+@section AddToHead{
+    <link href="@Url.Content("/Content/Css/jquery.mCustomScrollbar.css")" rel="stylesheet" type="text/css" />
+}
+<div class="main_body bg3 join">
+    <div class="c1200">
+        <p class="position">
+            <span><a href="@Url.Action("Index","Index")">首页</a></span>&gt;
+            <span>@(Model.ParentTitle)</span>&gt;
+            <span>@Model.Contents.Title</span>
+        </p>
+        <div class="main_left">
+            <ul>
+            @foreach (var model in Model.Contentlist)
+            {
+                  <li class="@(ViewBag.Call == model.CallIndex ? "on" : "")"><a href="@Url.Action("Index", "Content", new { page = model.CallIndex })">@(model.Title)</a></li>
+            }
+            </ul>
+        </div>
+        <div class="main_right">
+            <div class="main" id="joincontent">
+                @Html.Raw(Model.Contents.Content)
+                <!--dv_scroll_bar end-->
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Scripts/jquery.mCustomScrollbar.concat.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    //滚动条
+    window.onload = function () {
+        $("#joincontent").mCustomScrollbar({
+            scrollButtons: {
+                enable: true
+            }
+        });
+    }
+</script>

@@ -1,0 +1,60 @@
+﻿@using LidyCms.Common
+@using LidyCms.Model
+@using LidyCms.Web.UI
+@model List<LidyCms.Model.News>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="main_body bg3">
+    <div class="c1200 news">
+         <p class="position">
+            <span><a href="@Url.Action("Index","Index")">首页</a></span>&gt;
+            <span><a href="@Url.Action("Index", "News")">星恒星资讯</a></span>&gt;
+        </p>
+        <div class="main_left">
+            <ul>
+                @{
+                    List<Channel> news = Utils.GetCacheChannel((int)BasePage.Channel.News,5);
+                    foreach (Channel item in news)
+                    {
+                        <li class="@(ViewBag.Id == item.Id.ToString() ? "on" : "")"><a href="@Url.Action("Index", "News", new { id = item.Id })">@item.Title</a></li>
+                    }
+                 }
+            </ul>
+        </div>
+        <div class="main_right">
+            <div id="mainContent">
+                <div class="News-main">
+                    <div class="news-label">
+                        <a class="defaultimg" target="_blank" href="@Url.Action("Detail", "News")">
+                            <img width="166" height="96" src="/content/images/20130911103324_6574.jpg"></a>
+                        <a class="title" target="_blank" href="@Url.Action("Detail", "News", new { id = Model[0].Id })">@Model[0].Title</a>
+                        <p>
+                            @Model[0].Zhaiyao</p>
+                        <span><a target="_blank" href="@Url.Action("Detail", "News")">[查看详情]</a>[发布时间：@Model[0].AddTime.ToShortDateString()]</span><div
+                            class="clear">
+                        </div>
+                    </div>
+                    <div class="news-list">
+                        <ul class="clearfix">
+                            @foreach (var item in Model)
+                            {
+                                <li><a target="_blank" href="@Url.Action("Detail", "News", new { id = item.Id })"><em>@item.AddTime.ToShortDateString()</em>@item.Title</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="paging">
+                        <a title="第一页" class="p-begin"></a><a title="上一页" class="p-back"></a><a class="active"
+                            href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a
+                                href="#">6</a> <a title="下一页" class="p-next" href="#"></a><a title="最后一页" class="p-last"
+                                    href="#"></a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
