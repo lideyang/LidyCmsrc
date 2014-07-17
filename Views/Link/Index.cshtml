@@ -1,6 +1,133 @@
 ﻿@{
-    ViewBag.Title = "Index";
+   
 }
+@model LidyCms.Model.LinksList
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	
+    <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="" />
+        <input type="button" class="button" onclick="SiteSearch('/Search', '#txtKeywords');" />
+    </div>
 
-<h2>Index</h2>
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="@Url.Action("Index", "Index")">主页</a> &gt;
+        <a href="@Url.Action("Index", "Link", new { classId = 0 })">友情链接</a>@Html.Raw(ViewBag.Nav)
+		<div class="right_function_key">
+			<a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);">
+            <img src="@Url.Content("~/Content/images/font_delete.png")" width="16" height="16" /> 缩小</a>
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);">
+            <img src="@Url.Content("~/Content/images/font_add.png")" width="16" height="16" /> 放大</a>
+            <a href="javascript:window.print();"><img src="@Url.Content("~/Content/images/printer.png")" width="16" height="16" /> 打印</a>
+		</div>
+	</div>
+
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		<h2 id="page_title">友情链接</h2>
+		<div class="content_box">
+			<div class="blue_box"><a href="#link">== 点击这里申请加入友情链接 ==</a></div>
+			<br />
+			<h2>文字链接</h2>
+			<p class="linktxt">
+			  @foreach(var txt in Model.TxtLinks)
+              {
+                <a target="_blank" href="@txt.WebUrl">@txt.Title</a>
+              }        
+			</p>
+			<h2>图片链接</h2>
+			<ul class="linkimg">
+				@foreach(var img in Model.ImgLinks)
+                {
+                  <a target="_blank" href="@img.WebUrl"><img src="@img.ImgUrl" alt="@img.Title" width="88" height="31" /></a>
+                }            
+			</ul>
+			<div class="clear"></div>
+			<!--申请链接结束-->
+			<div class="clear"></div>
+			<div class="blue_box"><a>== 本站友情链接展示 ==</a></div>
+			<div class="clear"></div>
+			<div class="sitelink">
+                <dl>
+                    <dt><a href="#" target="_blank">LidyCms</a></dt>
+                    <dd><textarea class="textarea"><a href="#" target=_blank >LidyCms</a></textarea></dd>
+                </dl>
+                <dl>
+                    <dt><a href="#" target="_blank"><img src="@Url.Content("~/Content/images/dt.png")" /></a></dt>
+                    <dd><textarea class="textarea"><a href="#" target=_blank ><img src="@Url.Content("~/Content/images/dt.png")" border=0 alt="LidyCms"></a></textarea></dd>
+                </dl>
+            </div>
+            <div class="clear"></div>
+            
+			<!--申请链接开始-->
+			<div class="commentform">
+				<div class="nTitle">申请链接<a name="link"></a></div>
+				<form id="comment_form" name="comment_form">
+					<dl>
+						<dt>网站名称：</dt>
+						<dd><input name="txtTitle" type="text" maxlength="100" id="txtTitle" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>联系人：</dt>
+						<dd><input name="txtUserName" type="text" maxlength="50" id="txtUserName" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>联系电话：</dt>
+						<dd><input name="txtUserTel" type="text" maxlength="50" id="txtUserTel" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>电子邮箱：</dt>
+						<dd><input name="txtUserMail" type="text" maxlength="50" id="txtUserMail" class="input2 email" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>链接网址：</dt>
+						<dd><input name="txtWebUrl" type="text" maxlength="250" id="txtWebUrl" class="input2 required url" style="width:350px;" /></dd>
+					</dl>
+					<dl>
+						<dt>链接类型：</dt>
+						<dd><input id="rblIsImage_0" type="radio" name="rblIsImage" value="0" checked="checked" /><label for="rblIsImage_0">文字链接</label><input id="rblIsImage_1" type="radio" name="rblIsImage" value="1" /><label for="rblIsImage_1">图片链接</label></dd>
+					</dl>
+					<dl>
+						<dt>LOGO地址：</dt>
+						<dd><input name="txtImgUrl" type="text" maxlength="250" id="txtImgUrl" class="input2 url" style="width:350px;" /></dd>
+					</dl>
+					<dl>
+						<dt>备注说明：</dt>
+						<dd>提交申请前请确保你的网站已经加入了我们的链接。</dd>
+					</dl>
+					<dl>
+						<dt>验证码：</dt>
+						<dd style="width:385px;">
+							<input name="txtCode" type="text" class="input2 required" minlength="4" maxlength="5" style="width:50px;">
+							<a href="javascript:void(0);" onclick="ToggleCode(this, '<%=SiteConfig.WebPath%>Tools/VerifyCodeImage.ashx');return false;"><img src="<%=SiteConfig.WebPath%>Tools/VerifyCodeImage.ashx" width="80" height="22" alt="点击切换验证码" style="vertical-align:middle;"> 看不清楚？</a> </dd>
+						<dd>
+							<input id="btnSubmit" name="btnSubmit" type="submit" class="submit2" value="提交保存">
+						</dd>
+					</dl>
+					<div class="clear"></div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3>关于我们</h3>
+		<ul>
+			@Html.Raw(ViewBag.MenuList)
+		</ul>
+		<h3>最新新闻</h3>
+		<ul>
+				@foreach(var news in Model.NewNews)
+            {
+                 <li>
+                    <a href="@Url.Action("Detail", "News", new { id = @news.Id })">@news.Title</a>
+                    <i><span>@news.Adbanner.Count 评论</span>@news.AddTime</i>
+                </li>
+            }             
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
 

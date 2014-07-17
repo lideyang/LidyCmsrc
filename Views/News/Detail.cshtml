@@ -1,37 +1,157 @@
-﻿@model LidyCms.Model.News
+﻿@model LidyCms.Model.NewsList
 @{
-    ViewBag.Title = "新闻";
+    ViewBag.Title = Model.News.Title;
 }
 @section AddToHead{
-    <link href="@Url.Content("/Content/Css/jquery.mCustomScrollbar.css")" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/css/msg.css")" />
 }
-<div class="main_body bg3">
-    <div class="c1200 newscontent">
-     <p class="position">
-            <span><a href="@Url.Action("Index","Index")">首页</a></span>&gt;
-            <span><a href="@Url.Action("Index","News")">星恒星资讯</a></span>&gt;
-            <span>@Model.Title</span>
-     </p>
-        <!-- 新闻内容 -->
-        <div class="newsdatail">
-            <span id="Titles">@Model.Title</span> | <span id="AddTime">
-                @Model.AddTime.ToShortDateString()</span>
-        </div>
-        <div class="main giftmain" id="newscontent">
-              @Html.Raw(Model.Content)
-            <!--dv_scroll_bar end-->
-        </div>
-        <div class="clear">
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+
+    <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="" />
+        <input type="button" class="button" onclick="SiteSearch('/Search', '#txtKeywords');" />
+    </div>
+
+    <div class="clear"></div>
+    <!-- ===== 面包屑与功能按钮 ===== -->
+    <div class="bread_crumbs">
+        <a href="@Url.Action("Index", "Index")">主页</a> &gt;
+        <a href="@Url.Action("Index", "News", new { classId = 0 })">资讯中心</a>@Html.Raw(ViewBag.Nav)
+        <div class="right_function_key">
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);">
+                <img src="@Url.Content("~/Content/images/font_delete.png")" width="16" height="16" />
+                缩小</a>
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);">
+                <img src="@Url.Content("~/Content/images/font_add.png")" width="16" height="16" />
+                放大</a>
+            <a href="javascript:window.print();">
+                <img src="@Url.Content("~/Content/images/printer.png")" width="16" height="16" />
+                打印</a>
         </div>
     </div>
-</div>
-<script src="@Url.Content("~/Content/Scripts/jquery.slideBox.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Content/Scripts/jquery.mCustomScrollbar.concat.min.js")" type="text/javascript"></script>
-<script type="text/javascript">
-    //滚动条
-    $("#newscontent").mCustomScrollbar({
-        scrollButtons: {
-            enable: true
+    <!-- ===== 左侧正文 ===== -->
+    <div class="page_left">
+        <h2 id="news_title">@Model.News.Title</h2>
+        <i class="date_i">作者：@Model.News.Author 来源：@Model.News.Form 浏览：@Model.News.Click 发布时间：@Model.News.AddTime</i>
+        <!-- ===== 编辑框内容 开始 ===== -->
+        <div class="content_box">
+            @Html.Raw(Model.News.Content)
+        </div>
+        <div class="addthis">
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style_24x24">
+                <a class="jiathis_button_qzone"></a>
+                <a class="jiathis_button_tsina"></a>
+                <a class="jiathis_button_tqq"></a>
+                <a class="jiathis_button_weixin"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                <a class="jiathis_counter_style"></a>
+            </div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+        </div>
+        <div class="clear"></div>
+        <!-- ===== 前后与返回 Previous, Next and Back ===== -->
+        <div class="p_n_b">
+            @{
+                if (ViewBag.GetPrevId > 0)
+                {
+                <a class="previous" href="@Url.Action("Detail", "News", new { id = ViewBag.GetPrevId })">« 上一篇</a>
+                }
+                else
+                {
+                <a class="previous">上一篇没有啦</a>
+                }
+            }
+            <a class="back" href="javascript:history.back(-1);">返回</a>
+            @{
+                if (ViewBag.GetNextId > 0)
+                {
+                <a class="next" href="@Url.Action("Detail", "News", new { id = ViewBag.GetNextId })">下一篇 »</a>
+                }
+                else
+                {
+                <a class="next">下一篇没有啦</a>
+                }
+            }
+        </div>
+        <div class="clear"></div>
+        <!-- ===== 用户留言评论 ===== -->
+        @if (Model.News.IsMsg > 0)
+        {   
+            <h2 id="page_title">@Model.News.Adbanner.Count 条评论</h2>
+            <div id="comment">
+                <div id="commentList">
+                    显示评论列表
+                </div>
+                @if (@Model.News.Adbanner.Count > 0)
+                {
+                    <div id="pagination" class="scott"></div>
+                }
+                <div class="clear"></div>
+                <!--用户评价开始-->
+                <div class="commentform clearfix">
+                    <div class="nTitle">发表评论</div>
+                    <form id="comment_form" name="comment_form">
+                        <dl>
+                            <dt>用户昵称：</dt>
+                            <dd style="width: 250px;">
+                                <input name="txtUserName" type="text" maxlength="30" class="input2 required">
+                                &nbsp;</dd>
+                            <dt>评价等级：</dt>
+                            <dd>
+                                <span id="stars" class="star star0">
+                                    <a title="一星级">1</a>
+                                    <a class="a2" title="二星级">2</a>
+                                    <a class="a3" title="三星级">3</a>
+                                    <a class="a4" title="四星级">4</a>
+                                    <a class="a5" title="五星级">5</a>
+                                </span>&nbsp;
+                          <input id="hidStar" name="hidStar" type="hidden" value="" class="required" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>评论内容：</dt>
+                            <dd>
+                                <textarea name="txtContent" class="textarea required" minlength="5" maxlength="3000"></textarea>
+                                &nbsp;</dd>
+                        </dl>
+                        <dl>
+                            <dt>验证码：</dt>
+                            <dd style="width: 385px;">
+                                <input name="txtCode" type="text" class="input2 required" minlength="4" maxlength="5" style="width: 50px;">
+                                <a href="javascript:void(0);" onclick="ToggleCode(this, '@Url.Content("~/Tools/VerifyCodeImage.ashx")');return false;">
+                                    <img src="@Url.Content("~/Tools/VerifyCodeImage.ashx")" width="80" height="22" alt="点击切换验证码" style="vertical-align: middle;">
+                                    看不清楚？</a>
+                            </dd>
+                            <dd>
+                                <input id="btnSubmit" name="btnSubmit" type="submit" class="submit2" value="提交评论">
+                            </dd>
+                        </dl>
+                        <div class="clear"></div>
+                    </form>
+                </div>
+                <!--用户评价结束-->
+            </div>
         }
-    });
-</script>
+    </div>
+    <!-- ===== 左侧子导航 ===== -->
+    <div class="page_right">
+        <h3>资讯导航</h3>
+        <ul class="sidebar_nav">
+            @Html.Raw(@ViewBag.MenuList)
+        </ul>
+        <h3>最新新闻</h3>
+        <ul class="sidebar_news">
+            @foreach (var news in Model.NewNewsList)
+            {
+                <li>
+                    <a href="@Url.Action("Detail", "News", new { id = @news.Id })">@news.Title</a>
+                    <i><span>@news.Adbanner.Count 评论</span>@news.AddTime</i>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>

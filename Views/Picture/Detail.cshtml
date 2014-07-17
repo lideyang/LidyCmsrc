@@ -1,61 +1,197 @@
-﻿@model LidyCms.Model.Pictures
+﻿@using LidyCms.Web.UI
+@model LidyCms.Model.PicturesList
 @{
-    ViewBag.Title = "爱的礼物";
+    ViewBag.Title = Model.Pictures.Title;
 }
 @section AddToHead{
-    <link href="@Url.Content("/Content/Css/jquery.slideBox.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("/Content/Css/jquery.mCustomScrollbar.css")" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/content/css/msg.css")" />
 }
-<div class="main_body bg3">
-    <div class="c1200 giftcontent">
-         <p class="position">
-            <span><a href="@Url.Action("Index","Index")">首页</a></span>&gt;
-            <span><a href="@Url.Action("Index", "Picture")">爱的礼物</a></span>&gt;
-            <span><a href="@Url.Action("Detail", "Picture", new { id = Model.Id })">@Model.Title</a></span>
-        </p>
-        <div class="main_left">
-            <div id="slideBox" class="slideBox giftBox">
-                <ul class="items">
-                @foreach (var pic in Model.PicturesAlbums)
-                {
-                   <li><a href="#" title="@Model.Title"><img src="@pic.ImgUrl" alt="@Model.Title" /></a></li>
-                }
-                </ul>
-            </div>
-        </div>
-        <!-- 右边礼物列表 -->
-        <div class="main_right">
-            <div class="newsdatail">
-                <span id="Titles">@Model.Title</span> | <span id="AddTime">
-                   @Model.AddTime</span></div>
-            <div class="main giftmain" id="giftcontent">
-              @Html.Raw(Model.Content)
-            </div>
-            <!--dv_scroll_bar end-->
-        </div>
-        <div class="clear">
+
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	
+   <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="" />
+        <input type="button" class="button" onclick="SiteSearch('/Search', '#txtKeywords');" />
+    </div>
+
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	  <div class="bread_crumbs">
+        <a href="@Url.Action("Index", "Index")">主页</a> &gt;
+        <a href="@Url.Action("Index", "Picture", new { classId = 0 })">>图文中心</a>@Html.Raw(ViewBag.Nav)
+        <div class="right_function_key">
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);">
+                <img src="@Url.Content("~/Content/images/font_delete.png")" width="16" height="16" />
+                缩小</a>
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);">
+                <img src="@Url.Content("~/Content/images/font_add.png")" width="16" height="16" />
+                放大</a>
+            <a href="javascript:window.print();">
+                <img src="@Url.Content("~/Content/images/printer.png")" width="16" height="16" />
+                打印</a>
         </div>
     </div>
-</div>
-<script src="@Url.Content("~/Content/Scripts/jquery.slideBox.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Content/Scripts/jquery.mCustomScrollbar.concat.min.js")" type="text/javascript"></script>
-<script type="text/javascript">
-    //滚动图
-    $('#slideBox').slideBox({
-        direction: 'left', //left,top#方向
-        duration: 0.3, //滚动持续时间，单位：秒
-        easing: 'swing', //swing,linear//滚动特效
-        delay: 5, //滚动延迟时间，单位：秒
-        hideClickBar: false, //不自动隐藏点选按键
-        clickBarRadius: 10, //按钮radius  
-        startIndex: 1//初始焦点顺序
-    });
-
-    //文字滚动
-    $("#giftcontent").mCustomScrollbar({
-        scrollButtons: {
-            enable: true
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		<h2 id="news_title">@Model.Pictures.Title</h2>
+		<div class="pictureDIV">
+		    <div id="preview" class="spec-preview">
+              <span class="jqzoom"><img /></span>
+	        </div>
+            <!--缩图开始-->
+            <div class="spec-scroll">
+              <a class="prev">&lt;</a>
+              <a class="next">&gt;</a>
+              <div class="items">
+                <ul>
+                    @foreach(var thumb in Model.Pictures.PicturesAlbums)
+                    {
+                      <li><img bimg="@thumb.ImgUrl" src="@Url.Content("~/Tools/Http_ImgLoad.ashx?w=292&h=292&gurl="+thumb.ImgUrl)" onmousemove="preview(this);" /></li>
+                    }
+                </ul>
+              </div>
+            </div>
+            <!--缩图结束-->
+		</div>
+		<ul class="productItem">
+			<li>所属类别：@ViewBag.ParentTitle</li>
+	      @foreach(var field in Model.Pictures.PicturesExtensions)
+          {
+            <li>@field.FieldName：@field.Content</li>
+           }
+			<li>商品价格：@(Model.Pictures.Price> 0 ? Model.Pictures.Price + " 元" : "暂无价格")</li>
+			<li>浏览次数：@Model.Pictures.Click</li>
+			<li>发布时间：@Model.Pictures.AddTime.ToString("yyyy-MM-dd")</li>
+		</ul>
+		<div class="clear"></div>
+		<!-- ===== 编辑框内容 开始 ===== -->
+		<div class="content_box">
+			@Html.Raw(Model.Pictures.Content)
+		</div>
+		<div class="addthis">
+			<!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style_24x24">
+                <a class="jiathis_button_qzone"></a>
+                <a class="jiathis_button_tsina"></a>
+                <a class="jiathis_button_tqq"></a>
+                <a class="jiathis_button_weixin"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                <a class="jiathis_counter_style"></a>
+            </div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+		</div>
+		<div class="clear"></div>
+		<!-- ===== 前后与返回 Previous, Next and Back ===== -->
+		<div class="p_n_b">
+	       @{
+                if (ViewBag.GetPrevId > 0)
+                {
+                <a class="previous" href="@Url.Action("Detail", "Picture", new { id = ViewBag.GetPrevId })">« 上一篇</a>
+                }
+                else
+                {
+                <a class="previous">上一篇没有啦</a>
+                }
+            }
+            <a class="back" href="javascript:history.back(-1);">返回</a>
+            @{
+                if (ViewBag.GetNextId > 0)
+                {
+                <a class="next" href="@Url.Action("Detail", "Picture", new { id = ViewBag.GetNextId })">下一篇 »</a>
+                }
+                else
+                {
+                <a class="next">下一篇没有啦</a>
+                }
+            }
+		</div>
+		<div class="clear"></div>
+		<!-- ===== 用户留言评论 ===== -->
+		 @if (Model.Pictures.IsMsg > 0)
+        { 
+		<h2 id="page_title">@Model.Pictures.Adbanner.Count 条评论</h2>
+		<div id="comment">
+			<div id="commentList">
+				显示评论列表
+			</div>
+			 @if (@Model.Pictures.Adbanner.Count > 0)
+                {
+                    <div id="pagination" class="scott"></div>
+                }
+            <div class="clear"></div>
+			<!--用户评价开始-->
+			<div class="commentform clearfix">
+				<div class="nTitle">发表评论</div>
+				<form id="comment_form" name="comment_form">
+					<dl>
+						<dt>用户昵称：</dt>
+						<dd style="width:250px;">
+							<input name="txtUserName" type="text" maxlength="30" class="input2 required">
+							&nbsp;</dd>
+						<dt>评价等级：</dt>
+						<dd>
+                          <span id="stars" class="star star0">
+                            <a title="一星级">1</a>
+                            <a class="a2" title="二星级">2</a>
+                            <a class="a3" title="三星级">3</a>
+                            <a class="a4" title="四星级">4</a>
+                            <a class="a5" title="五星级">5</a>
+                          </span>&nbsp;
+                          <input id="hidStar" name="hidStar" type="hidden" value="" class="required" />
+                        </dd>
+					</dl>
+					<dl>
+						<dt>评论内容：</dt>
+						<dd>
+							<textarea name="txtContent" class="textarea required" minlength="5" maxlength="3000"></textarea>
+							&nbsp;</dd>
+					</dl>
+					<dl>
+						<dt>验证码：</dt>
+						<dd style="width:385px;">
+							<input name="txtCode" type="text" class="input2 required" minlength="4" maxlength="5" style="width:50px;">
+							<a href="javascript:void(0);" onclick="ToggleCode(this, '@Url.Content("~/Tools/VerifyCodeImage.ashx")');return false;">
+                            <img src="@Url.Content("~/Tools/VerifyCodeImage.ashx")" width="80" height="22" alt="点击切换验证码" style="vertical-align:middle;"> 看不清楚？</a> </dd>
+						<dd>
+							<input id="btnSubmit" name="btnSubmit" type="submit" class="submit2" value="提交评论">
+						</dd>
+					</dl>
+					<div class="clear"></div>
+				</form>
+			</div>
+			<!--用户评价结束-->
+		</div>
         }
-    });
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3>图文类别</h3>
+		<ul class="sidebar_nav">
+			 @Html.Raw(@ViewBag.MenuList)
+		</ul>
+		<h3>推荐图文</h3>
+		<ul class="sidebar_news">
+		   @foreach(var recommend in Model.RecommendList)
+           {
+             <li>
+                <a href="@Url.Action("Detail","Picture",new{id=recommend.Id})">@recommend.Title</a>
+                <i><span>@recommend.Adbanner.Count 评论</span>@recommend.AddTime</i>
+            </li>
+           }
+	   </ul>
+	</div>
+	<div class="clear"></div>
+</div>
 
-</script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/plugins/jquery.jqzoom.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/picture.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/plugins/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/plugins/messages_cn.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/plugins/jquery.form.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/plugins/jquery.validate.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/plugins/messages_cn.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/jquery.pagination.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/send_json.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/content/scripts/comment.js")"></script>

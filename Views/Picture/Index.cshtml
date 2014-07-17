@@ -1,80 +1,72 @@
-﻿@model List<LidyCms.Model.Pictures>
+﻿@using LidyCms.Common
+@model LidyCms.Model.PicturesList
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "图文中心";
 }
 @section AddToHead{
-    <link href="@Url.Content("/Content/Css/mosaic.css")" rel="stylesheet" type="text/css" />
+   
 }
-<div class="main_body bg3">
-    <div class="c1200 gift">
-        <div class="title">
-            <img alt="" src="@ViewBag.TopUrl" />
-        </div>
-         <p class="position">
-            <span><a href="@Url.Action("Index","Index")">首页</a></span>&gt;
-            <span><a href="@Url.Action("Index", "Picture")">爱的礼物</a></span>&gt;
-            <span>@Model[0].Title</span>
-        </p>
-        <!-- 礼物列表 -->
-        <div id="container">
-            <div id="carousel">
-            @foreach (var pic in Model)
-            {
-                <div class="mosaic-block bar">
-                    <a href="@Url.Action("Detail", "Picture", new { id = pic.Id })" target="_blank" class="mosaic-overlay">
-                        <div class="details">
-                            <h4>@pic.Title</h4>
-                            <p>@Html.Raw(pic.Content)</p>
-                        </div>
-                    </a>
-                    <a href="@Url.Action("Detail", "Picture", new { id = pic.Id })">
-                    <img src="@pic.PicturesAlbums[0].ImgUrl" /></a>
-                </div>
-            }
-            </div>
-            <a href="@Url.Action("Detail", "Picture")" id="ui-carousel-next"><span>next</span></a>
-            <a href="@Url.Action("Detail", "Picture")" id="ui-carousel-prev"><span>prev</span></a>
-        </div>
+
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+
+    <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="" />
+        <input type="button" class="button" onclick="SiteSearch('/Search', '#txtKeywords');" />
     </div>
+
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="@Url.Action("Index", "Index")">主页</a> &gt;
+        <a href="@Url.Action("Index", "Picture", new { classId = 0 })">图文中心</a>@Html.Raw(ViewBag.Nav)
+		<div class="right_function_key">
+			<a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);">
+            <img src="@Url.Content("~/Content/images/font_delete.png")" width="16" height="16" /> 缩小</a>
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);">
+            <img src="@Url.Content("~/Content/images/font_add.png")" width="16" height="16" /> 放大</a>
+            <a href="javascript:window.print();"><img src="@Url.Content("~/Content/images/printer.png")" width="16" height="16" /> 打印</a>
+		</div>
+	</div>
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		@{
+           if(ViewBag.classId>0)
+           {
+		     <h2 id="page_title">@ViewBag.ParentTitle</h2>
+           }
+        }
+		<!-- ===== 图文列表 ===== -->
+		<div class="page_product_list">
+		    <ul>
+                @foreach(var picture in Model.Pictureslist)
+                {
+                  <li>
+                      <a href="@Url.Action("Detail", "Picture", new { id = picture.Id })">
+                      <img src="@picture.ImgUrl" width="196" height="196" alt="@picture.Title" />@Utils.CutString(picture.Title, 26)
+                      </a>
+                  </li>
+                }
+		    </ul>
+	    </div>
+		<script type="text/javascript" src="@Url.Content("~/content/scripts/page/jquery.pagination.js")"></script>
+		@Html.Raw(ViewBag.PagerText)
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3>图文类别</h3>
+		<ul class="sidebar_nav">
+			@Html.Raw(@ViewBag.MenuList)
+		</ul>
+		<h3>推荐图文</h3>
+		<ul class="sidebar_news">
+            @foreach(var recommend in Model.RecommendList)
+            {
+              <li>
+                  <a href="@Url.Action("Detail","Picture",new{id=recommend.Id})">@recommend.Title</a>
+                  <i><span>@recommend.Adbanner.Count 评论</span>@recommend.AddTime</i>
+              </li>
+            }
+		</ul>
+	</div>
+	<div class="clear"></div>
 </div>
-<script src="@Url.Content("~/Content/Scripts/jquery.ui.core.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Content/Scripts/jquery.ui.widget.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Content/Scripts/jquery.ui.rcarousel.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Content/Scripts/mosaic.1.0.1.js")" type="text/javascript"></script>
-<script type="text/javascript">
-    jQuery(function ($) {
-        //滚动
-        $("#carousel").rcarousel({
-            margin: 10,
-            visible: 3,
-            width: 280,
-            height: 280
-        });
-        $("#ui-carousel-next")
-					.add("#ui-carousel-prev")
-					.hover(
-						function () {
-						    $(this).css("opacity", 0.7);
-						},
-						function () {
-						    $(this).css("opacity", 1.0);
-						}
-					)
-                    .click(
-                        function () {
-                            //提示
-                            $('.bar').mosaic({
-                                animation: 'slide'		//fade or slide
-                            });
-                        }
-                    );
-        //提示
-        $('.bar').mosaic({
-            animation: 'slide'		//fade or slide
-        });
-        $(".details p").each(function () {
-            $self = $(this);
-            $self.text($self.text());
-        });
-    });
-</script>

@@ -1,6 +1,108 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model LidyCms.Model.FeedbackList
+@{
+    ViewBag.Title = "用户留言";
 }
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+	
+    <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="" />
+        <input type="button" class="button" onclick="SiteSearch('/Search', '#txtKeywords');" />
+    </div>
 
-<h2>Index</h2>
+	<div class="clear"></div>
+	<!-- ===== 面包屑与功能按钮 ===== -->
+	<div class="bread_crumbs"><a href="@Url.Action("Index", "Index")">主页</a> &gt;
+        <a href="@Url.Action("Index", "Feedback", new { classId = 0 })">在线留言</a>
+		<div class="right_function_key">
+			<a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);">
+            <img src="@Url.Content("~/Content/images/font_delete.png")" width="16" height="16" /> 缩小</a>
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);">
+            <img src="@Url.Content("~/Content/images/font_add.png")" width="16" height="16" /> 放大</a>
+            <a href="javascript:window.print();"><img src="@Url.Content("~/Content/images/printer.png")" width="16" height="16" /> 打印</a>
+		</div>
+	</div>
+	<!-- ===== 左侧正文 ===== -->
+	<div class="page_left">
+		<h2 id="page_title">留言建议</h2>
+		<div id="comment">
+			<div id="commentList">
+			@foreach(var feedback in Model.Feedback)
+            {
+                <div class="item">
+					<div class="user"><span class="u-name">网友：@feedback.UserName</span> <span class="date-ask">@feedback.AddTime</span></div>
+					<dl class="answer">
+						<dt>评论内容：</dt>
+						<dd>
+							<p>@feedback.Content</p>
+							<div class="clear"></div>
+						</dd>
+					</dl>
+					@Html.Raw(feedback.ReContent != "" ? "<dl class=\"reply\">\n<dt>管理员答复：<i>" + feedback.ReTime + "</i></dt>\n<dd>" + feedback.ReContent + "</dd></dl>\n" : "")
+				</div>
+            }
+			</div>
+			<script type="text/javascript" src="@Url.Content("~/content/scripts/page/jquery.pagination.js")"></script>
+		    @Html.Raw(ViewBag.PagerText)
+			<div class="clear"></div>
+			<!--用户留言开始-->
+			<div class="commentform">
+				<div class="nTitle">发表留言</div>
+				<form id="comment_form" name="comment_form">
+					<dl>
+						<dt>你的姓名：</dt>
+						<dd><input name="txtUserName" type="text" maxlength="30" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>联系电话：</dt>
+						<dd><input name="txtUserTel" type="text" maxlength="30" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>在线QQ：</dt>
+						<dd><input name="txtUserQQ" type="text" maxlength="20" class="input2 required" style="width:250px;" /></dd>
+					</dl>
+					<dl>
+						<dt>留言标题：</dt>
+						<dd><input name="txtTitle" type="text" maxlength="100" class="input2 required" style="width:385px;" /></dd>
+					</dl>
+					<dl>
+						<dt>留言内容：</dt>
+						<dd><textarea name="txtContent" class="textarea required" minlength="5" maxlength="3000"></textarea></dd>
+					</dl>
+					<dl>
+						<dt>验证码：</dt>
+						<dd style="width: 385px;">
+                             <input name="txtCode" type="text" class="input2 required" minlength="4" maxlength="5" style="width: 50px;">
+                             <a href="javascript:void(0);" onclick="ToggleCode(this, '@Url.Content("~/Tools/VerifyCodeImage.ashx")');return false;">
+                             <img src="@Url.Content("~/Tools/VerifyCodeImage.ashx")" width="80" height="22" alt="点击切换验证码" style="vertical-align: middle;">看不清楚？</a>
+                       </dd>
+						<dd>
+							<input id="btnSubmit" name="btnSubmit" type="submit" class="submit2" value="提交保存">
+						</dd>
+					</dl>
+					<div class="clear"></div>
+				</form>
+			</div>
+			<!--用户留言结束-->
+		</div>
+	</div>
+	<!-- ===== 左侧子导航 ===== -->
+	<div class="page_right">
+		<h3>关于我们</h3>
+		<ul class="sidebar_nav">
+			@Html.Raw(ViewBag.MenuList)      
+		</ul>
+		<h3>最新新闻</h3>
+		<ul class="sidebar_news">
+			@foreach(var news in Model.NewNews)
+            {
+                 <li>
+                    <a href="@Url.Action("Detail", "News", new { id = @news.Id })">@news.Title</a>
+                    <i><span>@news.Adbanner.Count 评论</span>@news.AddTime</i>
+                </li>
+            }         
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
 

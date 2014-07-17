@@ -1,6 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "出错啦，当前页面可能不存在或已被删除！";
 }
+@section AddToHead{
 
-<h2>Index</h2>
+}
+<script type="text/javascript">
+	setTimeout(startaction,3000);
+	function startaction()
+	{
+		history.back();
+	}
+</script>
+<div class="err">
+  <img src="@Url.Content("~/content/images/errorico.gif")" alt="error404" />
+  <b>出错啦，当前页面可能不存在或已被删除！</b><br />
+  3秒钟后自动返回上一页。请稍等……<br />
+  如果长时间没有反应，将手动点击<a href="javascript:history.back();">返回上一页</a>。
+</div>
 

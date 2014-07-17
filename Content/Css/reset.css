@@ -6,7 +6,7 @@ abbr,
 acronym,
 address,
 applet,
-News,
+article,
 aside,
 audio,
 b,
@@ -101,7 +101,7 @@ body {
   height: 100%;
 }
 
-News,
+article,
 aside,
 details,
 figcaption,

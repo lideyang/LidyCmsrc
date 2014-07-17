@@ -1,6 +1,46 @@
-﻿@{
+﻿@model List<LidyCms.Model.Search>
+@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<!-- ===== 正文内容 ===== -->
+<div class="container">
+
+    <div class="search_box">
+        <input id="txtKeywords" name="txtKeywords" type="text" class="text" value="" />
+        <input type="button" class="button" onclick="SiteSearch('/Search', '#txtKeywords');" />
+    </div>
+
+    <div class="clear"></div>
+    <!-- ===== 面包屑与功能按钮 ===== -->
+    <div class="bread_crumbs">
+        <a href="@Url.Action("Index", "Index")">主页</a> &gt; 站内搜索
+		<div class="right_function_key">
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 12);">
+                <img src="@Url.Content("~/Content/images/font_delete.png")" width="16" height="16" />
+                缩小</a>
+            <a href="javascript:void(0);" onclick="SetFontSize('.content_box', 16);">
+                <img src="@Url.Content("~/Content/images/font_add.png")" width="16" height="16" />
+                放大</a>
+            <a href="javascript:window.print();">
+                <img src="@Url.Content("~/Content/images/printer.png")" width="16" height="16" />
+                打印</a>
+        </div>
+    </div>
+    <!-- ===== 左侧正文 ===== -->
+    <div class="search">
+        <h2 id="page_title">查询结果<span>共@(Model.Count)条记录</span></h2>
+        <!-- ===== 查询列表 ===== -->
+        <ul class="page_news_list">
+            @foreach (var search in Model)
+            {
+                <li>
+                    <a target="_blank" href="@search.SiteUrl">@search.Title</a><i>@search.AddTime</i>
+                    <p>@search.Remark</p>
+                </li>
+            }
+        </ul>
+        @Html.Raw(ViewBag.PagerText)
+    </div>
+</div>
 
